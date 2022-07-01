@@ -25,6 +25,9 @@
 #include "spiRtos.h"
 #include "L6470.h"
 #include "Input.h"
+
+
+#include "CalcDrive2.h"
 //*************************************
 //Piority task 
 
@@ -244,12 +247,12 @@ void vObmenTask(void *pvParameters)
 											break; 
 										}
 										case 0x58:{
-											getPosition(&data[2]);  
+											to32InBuf(&data[2], getPosition(data[5])); 
 											sendBuf8(	adres, 0x58, &data[2]);
 											break; 
 										}
 										case  0x5F:{
-											getStatusCalc(&data[2]); 
+											//getStatusCalc(&data[2]); 
 											sendBuf8(	adres, 0x5F, &data[2]);
 											break; 
 										}
@@ -268,7 +271,7 @@ void vObmenTask(void *pvParameters)
 																(((int32_t)data[3])<<16)|
 																(((int32_t)data[4])<<8)|
 																(((int32_t)data[5])));
-										StartMove(SHD_DIR_FWD, pos);
+										StartMove( pos);
 										sendBuf8(	adres, 0x61, &data[2]);	
 										break; 
 										}
@@ -277,7 +280,7 @@ void vObmenTask(void *pvParameters)
 																(((int32_t)data[3])<<16)|
 																(((int32_t)data[4])<<8)|
 																(((int32_t)data[5]))); 
-										StartMove(SHD_DIR_REV, pos);
+										StartMove(pos);
 										sendBuf8(	adres, 0x62, &data[2]);	
 										break; 
 
@@ -377,7 +380,7 @@ void vObmenTask(void *pvParameters)
 											break; 
 										}
 										case 0x83: {
-											to32InBuf(&data[2], getC0()); 
+											to32InBuf(&data[2], getC0(data[5])); 
 											sendBuf8(	adres, 0x83, &data[2]);
 											break; 
 										}
@@ -392,8 +395,7 @@ void vObmenTask(void *pvParameters)
 											break; 
 										}
 										case 0x86: {
-											to32InBuf(&data[2], getCountSteToVmax()); 
-											calcCn(); 
+											//to32InBuf(&data[2], getCountSteToVmax()); 
 											sendBuf8(	adres, 0x86, &data[2]);
 											break; 
 										}
@@ -514,7 +516,8 @@ int main(void)
 	initL6470Hw(STEP_DEFAULT, TOK_DEFAULT);
 	initCalcDrive(STEP_DEFAULT); 
   initPtrShdInfo(GetShdInfo()); 
-	initInput(); 
+	initInput();
+		
 	
 
 

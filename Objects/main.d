@@ -44,6 +44,6 @@
 .\objects\main.o: .\board\spi.h
 .\objects\main.o: .\board\L6470\L6470.h
 .\objects\main.o: .\board\l6470Timer.h
-.\objects\main.o: .\board\CalcDrive.h
+.\objects\main.o: .\board\CalcDrive2.h
 .\objects\main.o: .\board\l6470Timer.h
 .\objects\main.o: .\board\Input.h

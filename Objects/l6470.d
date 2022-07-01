@@ -37,6 +37,6 @@
 .\objects\l6470.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\l6470.o: .\board\spi.h
 .\objects\l6470.o: .\board\l6470Timer.h
-.\objects\l6470.o: .\board\CalcDrive.h
+.\objects\l6470.o: .\board\CalcDrive2.h
 .\objects\l6470.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\l6470.o: .\board\l6470Timer.h

@@ -448,14 +448,14 @@
               <FilePath>.\board\l6470Timer.c</FilePath>
             </File>
             <File>
-              <FileName>CalcDrive.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\board\CalcDrive.c</FilePath>
-            </File>
-            <File>
               <FileName>Input.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\board\Input.c</FilePath>
+            </File>
+            <File>
+              <FileName>CalcDrive2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\board\CalcDrive2.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -523,14 +523,14 @@
               <FilePath>.\board\l6470Timer.h</FilePath>
             </File>
             <File>
-              <FileName>CalcDrive.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\board\CalcDrive.h</FilePath>
-            </File>
-            <File>
               <FileName>Input.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\board\Input.h</FilePath>
+            </File>
+            <File>
+              <FileName>CalcDrive2.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\board\CalcDrive2.h</FilePath>
             </File>
           </Files>
         </Group>

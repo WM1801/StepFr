@@ -71,7 +71,7 @@ SHD_dir dir;
 
 typedef struct{
 	int runStop:1; // trebuetsya ostanovka 
-	int b1:1;
+	int waitPosition:1; // imeetsya neobrabotannaya novay zely
 	int b2:1;
 	int b3:1;
 	int b4:1;
@@ -89,7 +89,7 @@ typedef struct{
 }SHD_flag; 
 
 typedef enum {
-    SHD_MOVE_STOP   =((uint8_t)0x01),
+    SHD_MOVE_STOP   =((uint8_t)0x00),
     SHD_MOVE_ACC   =((uint8_t)0x02),
 		SHD_MOVE_RUN   =((uint8_t)0x04),
 		SHD_MOVE_DCC   =((uint8_t)0x08)
@@ -108,11 +108,42 @@ typedef struct{
 }SHD_status; 
 
 
+typedef enum {
+    SRD_DIR_FWD   =((uint16_t)0x01),
+    SRD_DIR_REV   =((uint16_t)0x00)
+} SRD_dir;
+
+typedef enum {
+    SRD_MOVE_STOP   =((uint16_t)0x01),
+    SRD_MOVE_ACC   =((uint16_t)0x02),
+		SRD_MOVE_RUN   =((uint16_t)0x04),
+		SRD_MOVE_DCC   =((uint16_t)0x08)
+} SRD_MOVE_STATE;
 
 
 typedef struct {
-/*32*/		int32_t valueStep; // tekushee znachenie shaga
-/*32*/		int32_t targetStep; // zadannoe znachenie shaga
+  //! What part of the speed ramp we are in.
+  SRD_MOVE_STATE run_state;
+  //! Direction stepper motor should move.
+  uint16_t dir : 1;
+  //! Peroid of next timer delay. At start this value set the accelration rate.
+  uint32_t step_delay;
+  //! What step_pos to start decelaration
+  uint32_t decel_start;
+  //! Sets deceleration rate.
+  int32_t decel_val;
+  //! Minimum time delay (max speed)
+  int32_t min_delay;
+  //! Counter used when accelerateing/decelerateing to calculate step_delay.
+  int32_t accel_count;
+} speedRampData;
+
+
+typedef struct {
+/*32*/		int32_t path; 
+/*32*/		int32_t Position; // tekushee znachenie shaga
+/*32*/		int32_t targetPosition; // zadannoe znachenie shaga
+/*32*/		int32_t nextTargetPosition; // zadannoe znachenie shaga
 /*2x32*/	SHD_step nextVal;  // novoe znachenie dlya zapisi
 /*2x32*/	SHD_step currentVal;  // tekushee znachenie vypolnyaemoe
 /*2x32*/	SHD_step oldVal; // proshloe zapisannoe znachenie v taimer 
@@ -120,12 +151,14 @@ typedef struct {
 /*16*/		SHD_status status;
 /*32*/	  uint32_t Acc;     // step/sec2
 /*32*/	  uint32_t C0; 			// us
+/*32*/	  uint32_t C1; 			// us
 /*32*/    uint32_t Dcc;     // step/sec2
 /*32*/    uint32_t VminUs;  //us
 /*32*/	  uint32_t VmaxUs;  //us
 /*32*/		uint32_t Vmin;		// step/sec2
 /*32*/		uint32_t Vmax;		// step/sec2
 /*32*/    uint32_t countStepToVmax; 
+/*32*/    uint32_t countStepToV0; 
 /*32*/		uint32_t n; 
 }SHD_Info; 
 ; 

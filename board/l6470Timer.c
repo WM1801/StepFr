@@ -88,7 +88,7 @@ void initTimerL6470(void)
 	/* Initializes the TIMER1 Channel 3 -------------------------------------*/
 	TIMER_ChnStructInit(&sTim_ChnInit); 
 	sTim_ChnInit.TIMER_CH_Mode											= TIMER_CH_MODE_PWM;
-	sTim_ChnInit.TIMER_CH_REF_Format								= TIMER_CH_REF_Format3; // TIMER_CH_REF_Format3 - toggle ;TIMER_CH_REF_Format6; -pwm 
+	sTim_ChnInit.TIMER_CH_REF_Format								= TIMER_CH_REF_Format1; // TIMER_CH_REF_Format3 - toggle ;TIMER_CH_REF_Format6; -pwm 
 	sTim_ChnInit.TIMER_CH_Number										= TIMER_CHANNEL3; 
 	sTim_ChnInit.TIMER_CH_CCR1_Ena									= DISABLE;// enable
 	TIMER_ChnInit(L6470_TIMER, &sTim_ChnInit); 
@@ -128,10 +128,6 @@ void initTimerL6470(void)
 	TIMER_Cmd(L6470_TIMER, ENABLE);
 #endif
 
-		
-	
-	
-//	startTimerL6470(65500) ;
 	
 }
 
@@ -147,37 +143,11 @@ void initPtrShdInfo(SHD_Info * ptr)
 
 void startTimerL6470(uint32_t timeUs) 
 {
-//		if(timeUs!=0) 
-//		{			
-//				dtimeMs =  (uint16_t)((timeUs>>16)&0xFFFF);  
-//				dtimeUs = (uint16_t) (timeUs&0xFFFF); 
-//				saveTimeMs = dtimeMs; 
-//				saveTimeUs = dtimeUs;
-//				
-//				TIMER_Cmd(L6470_TIMER, DISABLE);
-//				
-//				/*if(dtimeMs&0xFFFF){
-//					dtimeMs--; 
-//					L6470_TIMER->CNT=0xFFFE;
-//					L6470_TIMER->CCR3 = 0xFFFF; 
-//				}
-//				else {
-//					L6470_TIMER->CCR3 = START_IMPULSA_PO_CNT;
-//					L6470_TIMER->CNT=dtimeUs;
-//				}*/
-//				L6470_TIMER->CCR3 = START_IMPULSA_PO_CNT;
-//				L6470_TIMER->CNT=FIRST_STEP_CNT;
-//				//L6470_TIMER->ARR=dtimeUs; 
-//				TIMER_Cmd(L6470_TIMER, ENABLE); 
-//		}
 		if(timeUs!=0) 
 		{			
 				ptrInfo->currentVal.speed = timeUs; 
 				ptrInfo->nextVal.speed = timeUs; 
-				//dtimeMs = (uint16_t)((timeUs>>16)&0xFFFF);   
-				//dtimeUs = (uint16_t) (timeUs&0xFFFF); 
-				//saveTimeMs = dtimeMs; 
-				//saveTimeUs = dtimeUs;			
+				
 				TIMER_Cmd(L6470_TIMER, DISABLE);				
 				L6470_TIMER->CCR3 = START_IMPULSA_PO_CNT;
 				L6470_TIMER->CNT=FIRST_STEP_CNT;
@@ -197,6 +167,8 @@ void stopTimerL6470(void)
 {
 		TIMER_Cmd(L6470_TIMER, DISABLE); 
 }
+
+
 // return 1 proshlo zadannoe vremz
 // return 0 proshlo FFFF us iz zadannogo vremeni
 uint16_t restartTimerMoreFFFF()
@@ -219,31 +191,36 @@ uint16_t restartTimerMoreFFFF()
 					ptrInfo->currentVal=ptrInfo->nextVal; 							
 					return 1; 
 			}		
-
-		/*		if(dtimeMs>0)
-			{
-					dtimeMs--; 
-					TIMER_Cmd(L6470_TIMER, DISABLE);
-					L6470_TIMER->CCR3 = 0xFFFF; 
-					TIMER_Cmd(L6470_TIMER, ENABLE);
-					L6470_TIMER->ARR=0xFFFE; // dtimeUs++?
-					return 0; 
-			}
-			else 
-			{ 
-					TIMER_Cmd(L6470_TIMER, DISABLE);
-					L6470_TIMER->CCR3 = START_IMPULSA_PO_CNT;
-					TIMER_Cmd(L6470_TIMER, ENABLE);
-					dtimeMs=saveTimeMs;
-					L6470_TIMER->ARR=dtimeUs;				
-					return 1; 
-			}	*/
 }
 
 
 /// file CalcDrive.c
 ///void Timer3_IRQHandler(void); 
 
+void Timer3_IRQHandler(void)
+{				
+		portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+		if(TIMER_GetITStatus(L6470_TIMER, TIMER_STATUS_CNT_ZERO) == SET)
+		{
+			TIMER_ClearITPendingBit(L6470_TIMER, TIMER_STATUS_CNT_ZERO);
+				
+				  
+				if(restartTimerMoreFFFF())
+				{
+					reTakt();
+					LedToggle(LED1);
+					//TIMER_Cmd(L6470_TIMER, DISABLE);
+					//xSemaphoreGiveFromISR(xSemTimer, &xHigherPriorityTaskWoken);
+						
+									 
+						
+					 	 
+				}
+				
+				portYIELD_FROM_ISR(xHigherPriorityTaskWoken);	 
+				
+		}
+}
 
 
 

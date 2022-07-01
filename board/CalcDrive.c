@@ -108,19 +108,22 @@ uint32_t GetSpeed(uint8_t sel)
 
 void StartMove( SHD_dir dir, int32_t position)
 {
-	Info.currentVal.dir = dir; 
-	Info.nextVal.dir = dir; 
-	Info.n = 0; 
-	
-	Info.oldVal.speed = 10000; 
-	Info.currentVal.speed = 10000; 
-	Info.nextVal.speed = 10000; 
-	
-	Info.targetStep = (int32_t)position; 
-	if(Info.targetStep!=Info.valueStep)
+	if(Info.status.state == SHD_MOVE_STOP)
 	{
-		stepClock(Info.currentVal.dir); 
-		startMoveTimer(); 
+		Info.currentVal.dir = dir; 
+		Info.nextVal.dir = dir; 
+		Info.n = 0; 
+		
+		Info.oldVal.speed = Info.C0; 
+		Info.currentVal.speed = Info.C0; 
+		Info.nextVal.speed = Info.C0; 
+		
+		Info.targetStep = (int32_t)position; 
+		if(Info.targetStep!=Info.valueStep)
+		{
+			stepClock(Info.currentVal.dir); 
+			startMoveTimer(); 
+		}
 	}
 }
 
@@ -227,6 +230,7 @@ void Timer3_IRQHandler(void)
 				
 		}
 }
+
 
 
 

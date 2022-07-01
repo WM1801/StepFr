@@ -339,8 +339,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\board\CalcDrive.c</PathWithFileName>
-      <FilenameWithoutPath>CalcDrive.c</FilenameWithoutPath>
+      <PathWithFileName>.\board\Input.c</PathWithFileName>
+      <FilenameWithoutPath>Input.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -351,8 +351,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\board\Input.c</PathWithFileName>
-      <FilenameWithoutPath>Input.c</FilenameWithoutPath>
+      <PathWithFileName>.\board\CalcDrive2.c</PathWithFileName>
+      <FilenameWithoutPath>CalcDrive2.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -515,8 +515,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\board\CalcDrive.h</PathWithFileName>
-      <FilenameWithoutPath>CalcDrive.h</FilenameWithoutPath>
+      <PathWithFileName>.\board\Input.h</PathWithFileName>
+      <FilenameWithoutPath>Input.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -527,8 +527,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\board\Input.h</PathWithFileName>
-      <FilenameWithoutPath>Input.h</FilenameWithoutPath>
+      <PathWithFileName>.\board\CalcDrive2.h</PathWithFileName>
+      <FilenameWithoutPath>CalcDrive2.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

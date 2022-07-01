@@ -31,7 +31,7 @@
 .\objects\l6470timer.o: .\rtos\include\semphr.h
 .\objects\l6470timer.o: board\Led.h
 .\objects\l6470timer.o: .\rtos\include\timers.h
-.\objects\l6470timer.o: board\CalcDrive.h
+.\objects\l6470timer.o: board\CalcDrive2.h
 .\objects\l6470timer.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\l6470timer.o: board\spiRtos.h
 .\objects\l6470timer.o: C:\Users\User\AppData\Local\Arm\Packs\Keil\MDR1986BExx\2.0.3\Libraries\SPL\MDR32Fx\inc\MDR32F9Qx_ssp.h
